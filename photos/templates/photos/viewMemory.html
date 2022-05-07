@@ -1,0 +1,66 @@
+{% extends 'index.html' %}
+
+{% load static %}
+{% block content %}
+
+
+
+
+    <div class="container m-5">
+        <div class="row justify-content-center">
+            <div class="col" style="width: 23rem;">
+                <a href=" {% url 'memoryGallery' %} " class="btn btn-outline-success my-3">Go Back</a>
+
+
+                <div class="">
+                    <div class="card mx-1"  >
+      
+                    {% if memory.video %}
+      
+                    <video 
+                    id="my-video"
+                    class="video-js"
+                    controls
+                    preload="auto"
+                    muted = True
+                    
+                    {% if memory.image %}
+                      poster="{{memory.imageURL}}"
+                    {% endif %}  
+                    src="{{memory.videoURL }}" style="width: auto; height:auto">
+                </video>
+                    {% else %}
+      
+                      <img src=" {{memory.image.url}} " class="img-fluid " alt="...">
+                     
+                    {% endif %}
+
+                    <div class="card-body">
+                        <p class="card-text"><b>Category:</b> {{memory.category.name | title}}</p>
+                        <p class="card-text"><b>Title:</b> {{memory.title}}</p>
+                        <p class="card-text"><b>Description:</b> {{memory.description}}</p>
+                          {% if memory.location %}
+                              <p class="card-text"><b>Location:</b> {{memory.location}}| @ {{memory.date}}</p>
+                          {% endif %}
+                      </div>
+      
+                    
+
+                    <div class=" m-2">
+                        <a href=" {% url 'updateMemory' memory.pk %}  " class="btn btn-outline-success">Update</a>
+                        <a href=" {% url 'deleteMemory' memory.pk %} " class="btn btn-outline-success">Delete</a>
+                    </div>
+                    </div>
+                  </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+   
+
+
+
+{% endblock content %}

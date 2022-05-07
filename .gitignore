@@ -1,0 +1,8 @@
+MyMemoryLane/__pycache__
+photos/__pycache__
+photos/migrations
+users/__pycache__
+users/migrations
+static/vendor
+static/js
+requirements.txt

@@ -1,0 +1,120 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+
+
+   <style>
+        .list-group-item a{
+          text-decoration: none;
+          color: black;
+        }
+    </style>
+ 
+
+    <div class="container m-5">  
+      <div class="row">
+
+        <div class="col-md-3">
+          <h2>Categories</h2> 
+          <div class="card " style="width:20rem ;" >
+            
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <a href="{% url 'memoryGallery' %}"> <button class="btn btn-outline-secondary">All Names</button> </a>
+              </li>
+              {% for category in categories %}
+              <li class="list-group-item d-inline ">
+                <a href=" {% url 'memoryGallery' %}?searchCategory={{category.name}}  ">  
+                  <button class="btn btn-outline-secondary" >{{category.name | title}}</button>
+                </a> 
+                <a href=" {% url 'deleteCategory' category.pk %} " class="float-end" style="color: red;"><i class="bi bi-trash3-fill"></i>  
+                <a href=" {% url 'addMemory' category.pk %} " class="float-end" style="color: green;"><i class="bi bi-plus-circle-fill"></i>  
+
+              </li>
+
+              {% endfor %}         
+              <a href=" {% url 'addCategory' %} " class="btn btn-outline-success mt-2">Add New Category</a>
+             
+            </ul>
+          </div>
+          
+
+        </div>
+        
+        <div class="col-md-9  "> 
+          <div class="row  ">
+            <h3 class="mt-2">My Memories</h3> <hr>
+
+            {% for memory in memories %}
+
+                <div class="col-sm-12 col-md-6 col-lg-4 d-flex ">
+                  <div class="card  mx-1 " style="width: 20rem;" >
+
+                    {% if memory.video %}
+                    <div class="ratio ratio-16x9 ">
+                  
+                      <video 
+                        id="my-video"
+                        class="video-js"
+                        controls
+                        preload="auto"
+                        muted = True
+                        width="100%"
+                        {% if memory.image %}
+                          poster="{{memory.imageURL}}"
+                        {% endif %}  
+                        src="{{memory.videoURL }}" style="width: 100%;">
+                      </video>
+                    </div>
+
+                        <div class="card-body">
+                          <p class="card-text">Category: <b>{{memory.category.name | title}}</b> </p>
+                        </div>
+                    {% else %}
+                        <img src=" {{memory.imageURL}} " class="img-fluid " alt="..." >
+                        <div class="card-body">
+                          <p class="card-text">Category: <b>{{memory.category.name | title}}</b> </p>
+                        
+                        </div> 
+                    {% endif %}
+                        <a href="{% url 'viewMemory' memory.pk %}" class="btn btn-outline-success btn-sm mb-1">view</a>
+                  </div>
+                </div>
+              {% empty %}
+              <div class="card-body">
+                <h5> Hello {{request.user.username|title}}, You Are Welcome , Please Follow This Steps To Begin</h5>
+                <p>
+                  1. Add a new category <br>
+                  2. Click on the (+) icon to add some memories <br>
+                  3. You can update and delete any memory of your choice <br>
+                  4. If you delete a category, all the memories in that category will be deleted
+
+                </p>
+              </div>
+              
+
+            
+            
+            {% endfor %}
+
+              
+          </div>
+            
+          </div>
+      </div>
+
+      
+    </div>
+
+    
+
+    
+
+  
+  {% endblock %}
+
+ 

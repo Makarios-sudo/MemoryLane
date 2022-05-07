@@ -1,0 +1,68 @@
+{% extends 'index.html' %}
+
+{% load static %}
+{% block content %}
+
+
+{% if page == "profile" %}
+
+    
+    {% for profile in profiles %}
+        {% if request.user.profile == profile %}
+        
+       
+   <div class="container mt-5">
+    <div class="row">
+            <div class="row justify-content-center">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-0">
+                    <hr>
+                    <h2>My Profile</h2>
+                    <div class="card" >
+                        <img src=" {{ profile.imageURL }}" class="img">
+                        <div class="card-body">
+                          <h4 class="card-text"> Name:  {{ profile.username|title }} </h4><hr>
+                          {% if profile.about %}
+                          <span class="card-text"> <b>About:  {{ profile.about|title }}</b> </span> 
+                          {% endif %}
+                        </div>
+                      </div>
+
+                      <a href=" {% url 'memoryGallery' %} " class="btn btn-outline-danger my-3">Go Back</a>
+                      <a href=" {% url 'update' profile.pk %} " class="btn btn-outline-success my-3 float-end">Update</a> 
+                      <hr>
+
+                </div>
+            </div>
+        </div>
+            
+            
+        {% endif %}
+    {% endfor %}
+
+{% else %}
+            <div class="container m-5">
+                <div class="row justify-content-center">
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-0">
+                        <hr>
+                        <h2>Update Profile</h2> 
+
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                
+                            {% for field in form %}
+                                <label for="formInput#text">{{field.label |title}}</label>
+                                {{field}} <br>
+                            {% endfor%}
+                            
+                            <button class="btn btn-outline-success mt-1">Update</button>
+                        </form> <hr>
+                    </div>
+                </div>
+            </div>   
+
+
+{% endif %}
+
+
+
+{% endblock %}
