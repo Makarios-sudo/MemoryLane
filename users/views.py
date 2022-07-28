@@ -34,9 +34,9 @@ def userRegistration(request):
         form = userRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            # user = form.save(commit=False)
-            # user.username = user.username.lower()
-            # user.save()
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
             messages.success(request, "Registration was successfull")
             return redirect("userLogin")
         else:
